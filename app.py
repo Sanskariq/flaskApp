@@ -4,11 +4,12 @@ import MySQLdb.cursors
 
 app = Flask(__name__)
 
-# MySQL configurations
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '0604'
-app.config['MYSQL_DB'] = 'iqindia'
+# Aiven MySQL configurations
+app.config['MYSQL_HOST'] = 'iqindia-sanskariqindia-01c1.i.aivencloud.com'
+app.config['MYSQL_USER'] = 'avnadmin'
+app.config['MYSQL_PASSWORD'] = 'AVNS_d9OgBQ5g5eQBAIW07TH'
+app.config['MYSQL_DB'] = 'defaultdb'
+app.config['MYSQL_PORT'] = 16943  # Specify the port number
 
 mysql = MySQL(app)
 
@@ -26,7 +27,8 @@ def login():
         cursor.execute("SELECT * FROM clients WHERE client_id=%s", (customer['client_id'],))
         client = cursor.fetchone()
         return jsonify({'status': 'success', 'client': client, 'customer': customer})
+    
     return jsonify({'status': 'failure', 'message': 'Invalid credentials'})
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
